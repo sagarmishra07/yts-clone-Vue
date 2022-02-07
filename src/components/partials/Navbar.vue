@@ -1,35 +1,56 @@
 <template>
-  <div>
-    <nav>
-      <div class="logo">
-        <router-link to="/"
-          ><p>
-            <img
-              src="https://yts.mx/assets/images/website/logo-YTS.svg"
-              alt=""
-            />
-          </p>
-        </router-link>
-      </div>
-      <router-link to="/"
-        ><li style="color: rgb(94, 214, 94)">
-          HD movies at the smallest file size.
-        </li></router-link
-      >
-      <input type="text" name="" id="" placeholder="Quick Search..." />
-      <router-link to="/"><li>Home</li></router-link>
-      <router-link to="/movies"><li>Browse Movies</li></router-link>
-      <router-link to="/trending"><li>Trending</li></router-link>
-
-      <router-link to="/4k"><li>4K</li></router-link>
-      <router-link to="/login"><li>Login</li></router-link>
-      <router-link to="/register"><li>Register</li></router-link>
-    </nav>
-  </div>
+  <nav>
+    <div class="logo">
+      <img src="https://yts.mx/assets/images/website/logo-YTS.svg" alt="" />
+    </div>
+    <div v-for="(nav, key) in NavItems" :key="key">
+      <li @click="routeChange(nav.routeName)">{{ nav.label }}</li>
+    </div>
+  </nav>
 </template>
 <script>
 export default {
   name: "Navbar",
+  data() {
+    return {
+      NavItems: [
+        {
+          routeName: "/",
+          label: "Home",
+        },
+
+        {
+          routeName: "/movies",
+          label: "Browse Movies",
+        },
+        {
+          routeName: "/trending",
+          label: "Trending",
+        },
+
+        {
+          routeName: "/login",
+          label: "Login",
+        },
+        {
+          routeName: "/register",
+          label: "Register",
+        },
+      ],
+    };
+  },
+  computed: {
+    getCurrentRoutes() {
+      return this.$route.path;
+    },
+  },
+
+  methods: {
+    routeChange(routeName) {
+      if (routeName === this.getCurrentRoutes) return;
+      this.$router.push(routeName);
+    },
+  },
 };
 </script>
 <style scoped>
@@ -53,37 +74,16 @@ li {
   list-style-type: none;
   color: snow;
   font-size: 1rem;
+  cursor: pointer;
 }
 li:hover {
   color: rgb(94, 214, 94);
 }
-p {
-  color: rgb(89, 136, 136);
-  font-size: 1rem;
-  color: green;
-}
-router-link:active {
+
+li:active {
   color: teal;
 }
 
-router-link:active {
-  color: teal;
-  cursor: pointer;
-}
-input[type="text"] {
-  background: #1f1e1e;
-  border-radius: 15px;
-  height: 4vh;
-  width: 200px;
-  border: 2px solid #312121;
-}
-input[type="text"]::placeholder {
-  color: snow;
-  padding: 2rem;
-}
-input[type="text"]:focus {
-  color: snow;
-}
 .logo {
   padding-left: 3%;
 }

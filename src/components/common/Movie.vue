@@ -1,12 +1,13 @@
 <template>
   <div class="card-item">
-    <router-link :to="`/movies/${SingleMovie.id}`">
+    <div @click="movieDetails(SingleMovie.slug)">
       <img
         :src="SingleMovie.medium_cover_image"
         :alt="SingleMovie.title_long"
       />
-    </router-link>
-    <h1>{{ SingleMovie.title_long }}</h1>
+
+      <h1>{{ SingleMovie.title_long }}</h1>
+    </div>
   </div>
 </template>
 <script>
@@ -15,6 +16,11 @@ export default {
   props: {
     SingleMovie: {
       type: Object,
+    },
+  },
+  methods: {
+    movieDetails(slug) {
+      this.$router.push(`/movies/${slug}`);
     },
   },
 };

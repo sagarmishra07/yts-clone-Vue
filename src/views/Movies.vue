@@ -16,13 +16,11 @@ export default {
   components: {
     Movie,
   },
-  data() {
-    return {
-      AllMovies: [],
-    };
-  },
-  created() {
-    this.AllMovies = this.$store.getters.Allmovies;
+
+  computed: {
+    AllMovies() {
+      return this.$store.getters.Allmovies;
+    },
   },
 };
 </script>
@@ -32,12 +30,8 @@ export default {
   flex-wrap: wrap;
   width: 100%;
   justify-content: center;
-  align-content: center;
 }
 
-.card {
-  padding: 2rem 0rem 0rem 0rem;
-}
 h1 {
   display: flex;
   position: relative;

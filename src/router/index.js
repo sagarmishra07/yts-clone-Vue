@@ -2,10 +2,10 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Movie from "../views/Movies.vue";
-import About from "../views/About.vue";
+
 import Trending from "../views/Trending.vue";
 import SingleMovie from "../components/containers/SingleMovie.vue";
-import Quality from "../views/Quality.vue";
+
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 Vue.use(VueRouter);
@@ -22,7 +22,7 @@ const routes = [
     component: Movie,
   },
   {
-    path: "/movies/:id",
+    path: "/movies/:params",
     name: "SingleMovie",
     component: SingleMovie,
   },
@@ -31,16 +31,7 @@ const routes = [
     name: "Trending",
     component: Trending,
   },
-  {
-    path: "/4k",
-    name: "Quality",
-    component: Quality,
-  },
-  {
-    path: "/about",
-    name: "About",
-    component: About,
-  },
+
   {
     path: "/login",
     name: "Login",
