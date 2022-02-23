@@ -23,3 +23,24 @@ export default {
   },
 };
 </script>
+<style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.card {
+  padding: 3rem 0rem 0rem 3rem;
+}
+h1 {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  padding-top: 5%;
+  color: rgb(94, 214, 94);
+  font-size: 28px;
+}
+</style>

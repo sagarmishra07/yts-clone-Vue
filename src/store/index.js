@@ -1,12 +1,18 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import router from "../router/index";
+import { auth } from "../firebase/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  namespaced: true,
   state: {
     Movies: [],
-    SimilarMovies: [],
+    user: [],
+    loggedIn: false,
   },
   getters: {
     Allmovies: (state) => {
@@ -15,16 +21,17 @@ export default new Vuex.Store({
     trendingMovies: (state) => {
       return state.Movies.filter((movie) => movie.rating > 7.1);
     },
-    similarMovies: (state) => {
-      return state.SimilarMovies;
-    },
   },
   mutations: {
     async movieFetch(state, payload) {
       state.Movies = await payload;
     },
-    async similarMovies(state, payload) {
-      state.SimilarMovies = await payload;
+    async SET_USER(state, currentUser) {
+      if (currentUser) {
+        state.user = await currentUser;
+      } else {
+        alert("no user");
+      }
     },
   },
   actions: {
@@ -37,16 +44,29 @@ export default new Vuex.Store({
         console.log("Error in ", error ?? "could not get data");
       }
     },
-    async fetchSimilarMovies(context, movieId) {
+    async LOGIN({ commit }, details) {
       try {
-        const res = await axios.get(
-          `https://yts.mx/api/v2/movie_suggestions.json?movie_id=${movieId}`
-        );
-        context.commit("similarMovies", res?.data?.data?.movies ?? []);
+        await signInWithEmailAndPassword(auth, details.email, details.password);
       } catch (error) {
-        console.log("error", error);
+        switch (error.code) {
+          case "auth/user-not-found":
+            alert("User not found");
+            break;
+          case "auth/wrong-password":
+            alert("Wrong Password");
+            break;
+          case "auth/invalid-email":
+            alert("Invalid Email Format");
+            break;
+
+          default:
+            alert("Something Went wrong");
+        }
+        return;
       }
+      commit("SET_USER", auth.currentUser);
+      router.push("/dashboard");
     },
+    async LOGOUT() {},
   },
-  modules: {},
 });
