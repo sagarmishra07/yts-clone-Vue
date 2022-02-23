@@ -2,8 +2,9 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import router from "../router/index";
+
 import { auth } from "../firebase/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 Vue.use(Vuex);
 
@@ -11,8 +12,7 @@ export default new Vuex.Store({
   namespaced: true,
   state: {
     Movies: [],
-    user: [],
-    loggedIn: false,
+    user: null,
   },
   getters: {
     Allmovies: (state) => {
@@ -32,6 +32,9 @@ export default new Vuex.Store({
       } else {
         alert("no user");
       }
+    },
+    CLEAR_USER(state) {
+      state.user = null;
     },
   },
   actions: {
@@ -65,8 +68,17 @@ export default new Vuex.Store({
         return;
       }
       commit("SET_USER", auth.currentUser);
+      // localStorage.setItem(
+      //   "token",
+      //   auth.currentUser.stsTokenManager.refreshToken
+      // );
       router.push("/dashboard");
     },
-    async LOGOUT() {},
+    async LOGOUT({ commit }) {
+      await signOut(auth);
+      commit("CLEAR_USER");
+      // localStorage.remove("token");
+      router.push("/");
+    },
   },
 });

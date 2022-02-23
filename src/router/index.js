@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import { auth } from "../firebase/firebase";
 
 Vue.use(VueRouter);
 
@@ -34,6 +35,9 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: () => import("../views/Dashboard.vue"),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/register",
@@ -52,5 +56,16 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
-
 export default router;
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!auth.currentUser) {
+      next("/login");
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
