@@ -4,6 +4,7 @@
     <div class="container">
       <div v-for="SingleMovie in AllMovies" :key="SingleMovie.id" class="card">
         <Movie :SingleMovie="SingleMovie" />
+        
       </div>
     </div>
   </section>
@@ -19,7 +20,7 @@ export default {
 
   computed: {
     AllMovies() {
-      return this.$store.getters.Allmovies;
+      return this.$store.state.movie.Movies;
     },
   },
 };

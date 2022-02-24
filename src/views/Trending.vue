@@ -18,7 +18,7 @@ export default {
 
   computed: {
     MovieList() {
-      return this.$store.getters.trendingMovies;
+      return this.$store.state.movie.TrendingMovies;
     },
   },
 };

@@ -13,9 +13,7 @@ export default {
   components: {
     Navbar,
   },
-  async created() {
-    await this.$store.dispatch("movieFetch");
-  },
+ 
 };
 </script>
 <style>

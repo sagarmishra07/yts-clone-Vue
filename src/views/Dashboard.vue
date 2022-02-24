@@ -10,7 +10,7 @@ export default {
   name: "Dashboard",
   computed: {
     userData() {
-      return this.$store.state.user;
+      return this.$store.state.user.user;
     },
   },
   methods: {

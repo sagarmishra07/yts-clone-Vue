@@ -34,12 +34,12 @@
       <div class="description">
         <h1>{{ moviedetails.description_full }}</h1>
       </div>
-      <SimilarMovie :id="moviedetails.id" />
+     
     </div>
   </section>
 </template>
 <script>
-import SimilarMovie from "../containers/SimilarMovies.vue";
+
 export default {
   name: "SingleMovie",
   data() {
@@ -47,12 +47,10 @@ export default {
       slug: this.$route.params.params,
     };
   },
-  components: {
-    SimilarMovie,
-  },
+ 
   computed: {
     SingleMovie() {
-      return this.$store.getters.Allmovies.filter(
+      return this.$store.state.movie.Movies.filter(
         (mov) => mov.slug === this.slug
       );
     },
