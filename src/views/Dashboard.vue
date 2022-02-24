@@ -13,11 +13,13 @@ export default {
       return this.$store.state.user.user;
     },
   },
+ 
   methods: {
     signOut() {
       this.$store.dispatch("LOGOUT");
     },
   },
+ 
 };
 </script>
 

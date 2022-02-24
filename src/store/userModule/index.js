@@ -1,12 +1,15 @@
 import router from "../../router/index";
 
 import { auth } from "../../firebase/firebase";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from "firebase/auth";
 
 export default {
   state: {
-    user: null,
-    loggedIn: false,
+    user: [],
   },
 
   mutations: {
@@ -14,14 +17,12 @@ export default {
       if (currentUser) {
         state.user = await currentUser;
       } else {
-        state.user = null;
+        state.user = [];
       }
     },
-    loggedStatus(state, status) {
-      state.loggedIn = status;
-    },
+
     CLEAR_USER(state) {
-      state.user = null;
+      state.user = [];
     },
   },
   actions: {
@@ -32,17 +33,25 @@ export default {
             name: "Dashboard",
           }),
             commit("SET_USER", auth.currentUser);
-          commit("loggedStatus", true);
         })
         .catch((error) => {
           alert(error.message);
         });
     },
+    AUTH_STATE({ commit }) {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          commit("SET_USER", user);
+        } else {
+          commit("CLEAR_USER", user);
+        }
+      });
+    },
 
     async LOGOUT({ commit }) {
       await signOut(auth);
       commit("CLEAR_USER");
-      commit("loggedStatus", false);
+
       router.push("/login");
     },
   },

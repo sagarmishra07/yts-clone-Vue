@@ -34,12 +34,10 @@
       <div class="description">
         <h1>{{ moviedetails.description_full }}</h1>
       </div>
-     
     </div>
   </section>
 </template>
 <script>
-
 export default {
   name: "SingleMovie",
   data() {
@@ -47,7 +45,7 @@ export default {
       slug: this.$route.params.params,
     };
   },
- 
+
   computed: {
     SingleMovie() {
       return this.$store.state.movie.Movies.filter(

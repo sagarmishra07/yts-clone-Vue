@@ -4,7 +4,6 @@
     <div class="container">
       <div v-for="SingleMovie in AllMovies" :key="SingleMovie.id" class="card">
         <Movie :SingleMovie="SingleMovie" />
-        
       </div>
     </div>
   </section>

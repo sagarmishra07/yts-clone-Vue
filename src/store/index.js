@@ -1,13 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import movie from "./movieModule";
-import user from "./userModule";
+import movieModule from "./movieModule";
+import userModule from "./userModule";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    user: user,
-    movie: movie,
+    user: userModule,
+    movie: movieModule,
   },
 });

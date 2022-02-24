@@ -11,6 +11,7 @@ new Vue({
   store,
   async created() {
     await this.$store.dispatch("movieFetch");
+    this.$store.dispatch("AUTH_STATE");
   },
   render: (h) => h(App),
 }).$mount("#app");
